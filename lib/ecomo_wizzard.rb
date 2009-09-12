@@ -59,9 +59,7 @@ class EcomoWizzard < Sinatra::Application
     update_user_location
     content_type "text/json"
     
-    {
-      :searches => current_user.searches.map(&:results)
-    }.to_json
+    current_user.searches.to_a.to_json
   end
   
   post '/search.json' do
@@ -73,7 +71,7 @@ class EcomoWizzard < Sinatra::Application
       :query => params[:q], 
       :distance => params[:distance]
     )
-    
+      
     if search.save
       search.results.to_json
     else

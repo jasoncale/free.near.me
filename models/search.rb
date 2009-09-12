@@ -11,16 +11,21 @@ class Search
   belongs_to :user
   
   validates_present :query
-  validates_is_unique :query, :scope => :user_id
-  
-  def results
-    { 
-      :search => [self, { 
-        :items => items
-      }]
-    }
-  end
-  
+  #validates_is_unique :query, :scope => :user_id
+
+  def to_json(*a)
+    {
+      'id' => id,
+      'query' => query,
+      'distance' => distance,
+      'created_at' => created_at,
+      'updated_at' => updated_at,
+      'lat' => user.lat,
+      'lon' => user.long,
+      'items' => items
+    }.to_json(*a)
+  end  
+
   def items
     Item.search(
       :q => self.query,
