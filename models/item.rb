@@ -28,7 +28,7 @@ class Item
       'created' => created,
       'lat' => lat,
       'lon' => lon,
-      'source' => source.ident, 
+      'source' => %w(reyooze freecycle free2collect freebootr freemesa gigoit snaffleup)[rand * 7], 
       'url' => url
     }.to_json(*a)
   end
