@@ -1,1 +1,5 @@
-%h1 You are logged in!
+%h2 Dashboard
+
+%ul.searches
+-@searches.each do |search|
+  %li=search.query

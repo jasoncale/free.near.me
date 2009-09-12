@@ -219,6 +219,7 @@ body
 a
   :color #ff0060
   :text-decoration none
+  :padding 0 0.2em
   
 a:hover
   :color white
@@ -237,6 +238,13 @@ a:hover
     :font-weight normal
     :color white
     
+    a
+      :padding 0
+      :color white
+      
+    a[:hover]
+      :background #ff0060
+    
     
   h2
     :font-size 1.8em
@@ -251,10 +259,11 @@ a:hover
   :color #454545
 
   h2
-    :font-size 8em
-    :padding-bottom 0.2em
+    :font-size 15em
+    :padding-bottom 0.1em
     :font-family "Georgia"
     :font-weight normal
+    :color #aaa
 
   h3
     :font-size 3.6em
@@ -264,7 +273,25 @@ a:hover
     :line-height 1.6em
     :padding 0.5em 0 0.5em 0
         
-  
+  p.signup
+    :padding 2em 0
+    :font-size 2em
+
+    a
+      :font-size 2em
+      :font-weight bold
+    
+  p.made_by
+    :font-size 1.4em
+    :text-align right
+    
+    span.amp
+      :font-size 2em
+      
+    a, strong
+      :position relative
+      :top -0.4em
+      
   h3.form_title
     :padding-bottom 1em
     :font-size 2em

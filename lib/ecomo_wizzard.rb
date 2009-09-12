@@ -41,6 +41,9 @@ class EcomoWizzard < Sinatra::Application
   
   get '/dashboard' do
     login_required
+    
+    @searches = current_user.searches
+    
     haml :dashboard
   end
   
@@ -89,6 +92,11 @@ class EcomoWizzard < Sinatra::Application
     login_required
     destroy_search(params[:id])
     redirect '/dashboard'
+  end
+  
+  def flash
+    session[:flash] = {} if session[:flash] && session[:flash].class != Hash
+    session[:flash] ||= {}
   end
   
   private

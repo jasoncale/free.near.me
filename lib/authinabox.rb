@@ -55,7 +55,7 @@ module Sinatra
           haml clean(<<-EOS)
                         %h3.form_title Please sign in.
                         %form{ :method => "post" }
-
+                          
                           %p
                             %label{ :for => "user_username" }
                               username or e-mail:
@@ -108,6 +108,9 @@ module Sinatra
                         %h3.form_title Sign up to free.near.me
                         
                         %form{ :action => "#{Plugins::AuthInABox::OPTIONS[:signup_url]}", :method => "post" }
+                          -if flash[:error]
+                            %p.error= flash[:error]
+                        
                           %p
                             %label
                               username:
@@ -165,8 +168,10 @@ module Sinatra
         @user = User.new(:email => params[:email], :username => params[:username], :password => params[:password], :password_confirmation => params[:password_confirmation])
         if @user.save
           session[:user] = @user.id
+          flash[:notice] = "Your account has been created"
           redirect Plugins::AuthInABox::OPTIONS[:after_signup_url]
         else
+          flash[:error] = "Dude you suck, just fill in the form"
           puts @user.errors.full_messages
           redirect Plugins::AuthInABox::OPTIONS[:signup_url]
         end
