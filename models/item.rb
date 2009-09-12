@@ -28,7 +28,7 @@ class Item
         'description' => description,
         'created' => created,
         'lat' => lat,
-        'long' => long,
+        'lon' => long,
         'source' => source.ident,
         'url' => url
       }
