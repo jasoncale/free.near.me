@@ -29,14 +29,25 @@ class Search
     )
   end
   
+  def notify_user_of(item)
+    if search.notification_method.present?
+      self.send("notify_" + search.notification_method, item)
+    end
+  end
+  
+  def notify_twitter(item)
+    Tweet.post("@#{search}")
+  end
+  
   class << self
     
     def Poll
       self.all.each do |search|
         items = search.items
-        
         if items.present?
-          items.select {|item| item.created >= search.updated_at }.each(&:notify_user)
+          items.select {|item| item.created >= search.updated_at }.each do |new_item|
+            search.notify_user_of(new_item)
+          end
         end
       end
     end
