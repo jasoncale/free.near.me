@@ -168,29 +168,43 @@ module Sinatra
       
       
       # ====== HELPERS ======
-      helpers do
+      helpers do        
+        def unauthorized!(realm="ecomo-wizzards.heroku.com")
+
+          response['WWW-Authenticate'] = %(Basic realm="Testing HTTP Auth") and \
+              throw(:halt, [401, "Not authorized\n"]) and \
+              return 
+        end
+
+        def bad_request!
+          throw :halt, [ 400, 'Bad Request' ]
+        end
+          
+        def authorize(username, password)
+          User.authenticate(username, password).blank?
+        end
+        
         def login_required
-          if session[:user]
-            return true
-          elsif request.env['REQUEST_PATH'] =~ /(\.json|\.xml)$/ && request.env['HTTP_USER_AGENT'] !~ /Mozilla/
-              @auth ||= Rack::Auth::Basic::Request.new(request.env)
-              if @auth.provided? && @auth.basic? && @auth.credentials && User.authenticate(@auth.credentials.first, @auth.credentials.last)
-                session[:user] = User.first(:username => @auth.credentials.first).id
-                return true
-              else
-                status 401
-                halt("401 Unauthorized") rescue throw(:halt, "401 Unauthorized")
-              end
-          else
+          if authorized?
             session[:return_to] = request.fullpath
             redirect Plugins::AuthInABox::OPTIONS[:login_url]
             pass rescue throw :pass
+          else
+            unauthorized! unless auth.provided?
+            bad_request! unless auth.basic?
+            unauthorized! unless authorize(*auth.credentials)
+            request.env['REMOTE_USER'] = auth.username
+            session[:user] = User.first(:username => auth.credentials.first).id
+            return true
           end
         end
         
-        def admin_required
-          return true if login_required && current_user.account_type == 'admin'
-          redirect '/'
+        def auth
+          @auth ||= Rack::Auth::Basic::Request.new(request.env)
+        end
+        
+        def authorized?
+          session[:user].blank?
         end
           
         def current_user

@@ -16,20 +16,28 @@ class Search
   def results
     { 
       :search => [self, { 
-        :items => Item.search(
-          :q => self.query,
-          :lat => user.lat,
-          :long => user.long
-        )
+        :items => items
       }]
     }
+  end
+  
+  def items
+    Item.search(
+      :q => self.query,
+      :lat => user.lat,
+      :long => user.long
+    )
   end
   
   class << self
     
     def Poll
       self.all.each do |search|
+        items = search.items
         
+        if items.present?
+          items.select {|item| item.created >= search.updated_at }.each(&:notify_user)
+        end
       end
     end
   
