@@ -71,7 +71,7 @@ class Search
   
   class << self
     
-    def Poll
+    def poll
       self.all.each do |search|
         items = search.items
         if items.present?
