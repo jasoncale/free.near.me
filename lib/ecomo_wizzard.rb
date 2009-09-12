@@ -52,8 +52,8 @@ class EcomoWizzard < Sinatra::Application
     content_type "text/json"
     
     {
-      :items => Item.search(params).to_json
-    }
+      :items => Item.search(params)
+    }.to_json
   end
   
   get '/search/list.json' do
