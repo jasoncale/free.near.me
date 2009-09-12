@@ -28,7 +28,7 @@ module RemoteListings
       end
       
       def ident
-        %w(reyooze freecycle free2collect freebootr freemesa gigoit snaffleup).rand
+        %w(reyooze freecycle free2collect freebootr freemesa gigoit snaffleup)[rand * 7]
       end
     
     end
