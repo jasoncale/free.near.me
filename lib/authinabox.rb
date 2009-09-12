@@ -53,7 +53,9 @@ module Sinatra
       def render_login
         if Plugins::AuthInABox::OPTIONS[:template_language] == :haml          
           haml clean(<<-EOS)
+                        %h3.form_title Please sign in.
                         %form{ :method => "post" }
+
                           %p
                             %label{ :for => "user_username" }
                               username or e-mail:
@@ -64,6 +66,7 @@ module Sinatra
                             %input{ :id => "user_password", :name => "password", :size => 30, :type => "password" }
                           %p
                             %input{ :type => "submit", :value => "login" }
+                            .clear
                         EOS
         else
           erb clean(<<-EOS)
@@ -102,6 +105,8 @@ module Sinatra
       def render_signup
         if Plugins::AuthInABox::OPTIONS[:template_language] == :haml
           haml clean(<<-EOS)
+                        %h3.form_title Sign up to free.near.me
+                        
                         %form{ :action => "#{Plugins::AuthInABox::OPTIONS[:signup_url]}", :method => "post" }
                           %p
                             %label
@@ -129,6 +134,7 @@ module Sinatra
                               %input{ :id => "user_twitter", :name => "twitter", :size => 30, :type => "text" }
                           %p
                             %input{ :type => "submit", :value => "sign up" }
+                            .clear
                         EOS
         else
           erb clean(<<-EOS)

@@ -22,6 +22,8 @@ require 'dm-timestamps'
 require 'dm-validations'
 require 'fileutils'
 require 'haml'
+require 'sass'
+
 
 # Establish base directory names  
   DATABASE_DIR = File.join(APP_ROOT, "db")

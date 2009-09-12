@@ -28,7 +28,7 @@ class Item
       'created' => created,
       'lat' => lat,
       'lon' => lon,
-      'source' => source.ident,
+      'source' => source.ident, 
       'url' => url
     }.to_json(*a)
   end

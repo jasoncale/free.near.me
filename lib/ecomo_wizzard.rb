@@ -80,6 +80,11 @@ class EcomoWizzard < Sinatra::Application
     end
   end
   
+  get '/style.css' do  
+    content_type 'text/css', :charset => 'utf-8'
+    sass :stylesheet
+  end
+  
   delete '/search/:id' do
     login_required
     destroy_search(params[:id])

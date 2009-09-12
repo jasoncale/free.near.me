@@ -3,7 +3,7 @@ require 'httparty'
 class Tweet
   include HTTParty
   base_uri 'twitter.com'
-  basic_auth "ecomowdf", "3d9j92er"
+  basic_auth "freenearme", "r433h3q4j3"
   format :json
   
   class << self

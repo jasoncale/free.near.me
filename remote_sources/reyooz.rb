@@ -28,7 +28,7 @@ module RemoteListings
       end
       
       def ident
-        'reyooz'
+        %w(reyooze freecycle free2collect freebootr freemesa gigoit snaffleup).rand
       end
     
     end
