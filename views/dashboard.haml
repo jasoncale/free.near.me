@@ -1,5 +1,7 @@
 %h2 Dashboard
 
+%h3 Your searches
+
 %ul.searches
--@searches.each do |search|
-  %li=search.query
+  -@searches.each do |search|
+    %li=search.query
