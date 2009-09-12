@@ -3,8 +3,10 @@ APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 require 'rubygems'
 $:.unshift File.join(APP_ROOT, 'vendor', 'sinatra', 'lib')
 require 'sinatra'
+require 'json'
 require 'lib/initializer'
 require 'lib/authinabox'
+require 'lib/remote_listings/init'
 
 class EcomoWizzard < Sinatra::Application
   
@@ -42,6 +44,15 @@ class EcomoWizzard < Sinatra::Application
     haml :dashboard
   end
   
+  
+  # API
+  
+  get '/search.json' do
+    login_required
+    content_type "text/json"
+    
+    Item.search(params).to_json
+  end
   
   # get '/api.json' do
   #   login_required

@@ -29,7 +29,7 @@ module Sinatra
         :signup_url => '/signup',
         :after_signup_url => '/dashboard',
         :after_logout_url => '/',
-        :template_language => :erb
+        :template_language => :haml
       }
     end
   end
@@ -54,10 +54,10 @@ module Sinatra
         if Plugins::AuthInABox::OPTIONS[:template_language] == :haml          
           haml clean(<<-EOS)
                         %form{ :method => "post" }
-                          %label
+                          %label{ :for => "user_username" }
                             username or e-mail:
                           %input{ :id => "user_username", :name => "username", :size => 30, :type => "text" }
-                          %label
+                          %label{ :for => "user_password" }
                             password:
                           %input{ :id => "user_password", :name => "password", :size => 30, :type => "password" }
                           %input{ :type => "submit", :value => "login" }

@@ -1,21 +1,33 @@
+require 'rubygems'
 $:.unshift File.join(File.dirname(__FILE__), '..', 'vendor', 'sinatra', 'lib')
 require 'sinatra'
 require 'rack/test'
 
-EcomoWizzard.set(
-  :environment => :test,
-  :run => false,
-  :raise_errors => true,
-  :logging => false
-)
+set :environment, :test
 
-require File.join(File.dirname(__FILE__), '..', 'lib', 'ecomo-wizzards.rb')
+require 'test/unit'
+require 'mocha'
+require 'shoulda'
+require "webrat/sinatra"
+require 'sham'
+require 'faker'
+require 'machinist/data_mapper'
+
+require File.join(File.dirname(__FILE__), '..', 'lib', 'ecomo_wizzard.rb')
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
+
+Webrat.configure do |config|
+  config.mode = :sinatra
+  config.open_error_files = false
+end
 
 module TestHelper
   
+  include Webrat::Methods
+  include Webrat::Matchers
+  
   def app
-    # change to your app class if using the 'classy' style
-    Sinatra::Application.new
+    EcomoWizzard.tap { |app| app.set :environment, :test }
   end
   
   def body
@@ -27,10 +39,7 @@ module TestHelper
   end
   
   include Rack::Test::Methods
-
+  
 end
-
-require 'test/unit'
-require 'shoulda'
 
 Test::Unit::TestCase.send(:include, TestHelper)
