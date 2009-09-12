@@ -13,7 +13,7 @@ class Search
   belongs_to :user
   
   validates_present :query
-  #validates_is_unique :query, :scope => :user_id
+  validates_is_unique :query, :scope => :user_id
 
   def to_json(*a)
     {
