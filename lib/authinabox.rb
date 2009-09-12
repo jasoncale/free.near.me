@@ -170,10 +170,9 @@ module Sinatra
       # ====== HELPERS ======
       helpers do        
         def unauthorized!(realm="ecomo-wizzards.heroku.com")
-
           response['WWW-Authenticate'] = %(Basic realm="Testing HTTP Auth") and \
-              throw(:halt, [401, "Not authorized\n"]) and \
-              return 
+          throw(:halt, [401, "Not authorized\n"]) and \
+          return 
         end
 
         def bad_request!
@@ -204,7 +203,7 @@ module Sinatra
         end
         
         def authorized?
-          session[:user].blank?
+          !session[:user].blank?
         end
           
         def current_user
