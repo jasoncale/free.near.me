@@ -170,9 +170,15 @@ module Sinatra
       # ====== HELPERS ======
       helpers do        
         def unauthorized!(realm="ecomo-wizzards.heroku.com")
-          response['WWW-Authenticate'] = %(Basic realm="Testing HTTP Auth") and \
-          throw(:halt, [401, "Not authorized\n"]) and \
-          return 
+          if request.env['REQUEST_PATH'] =~ /(\.json|\.xml)$/ && request.env['HTTP_USER_AGENT'] !~ /Mozilla/
+            response['WWW-Authenticate'] = %(Basic realm="Testing HTTP Auth") and \
+            throw(:halt, [401, "Not authorized\n"]) and \
+            return 
+          else
+            session[:return_to] = request.fullpath
+            redirect Plugins::AuthInABox::OPTIONS[:login_url]
+            pass rescue throw :pass
+          end
         end
 
         def bad_request!
@@ -180,18 +186,17 @@ module Sinatra
         end
           
         def authorize(username, password)
-          User.authenticate(username, password).blank?
+          !User.authenticate(username, password).blank?
         end
         
         def login_required
           if authorized?
-            session[:return_to] = request.fullpath
-            redirect Plugins::AuthInABox::OPTIONS[:login_url]
-            pass rescue throw :pass
+            return true
           else
             unauthorized! unless auth.provided?
             bad_request! unless auth.basic?
             unauthorized! unless authorize(*auth.credentials)
+            
             request.env['REMOTE_USER'] = auth.username
             session[:user] = User.first(:username => auth.credentials.first).id
             return true
