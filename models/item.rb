@@ -34,17 +34,13 @@ class Item
       }
     }.to_json(*a)
   end
-
-  def self.json_create(o)
-    new(*o['data'])
-  end
   
   alias :url :permalink
   
   class << self
   
     def search(params)
-      parse_reyoos(params)
+      (parse_reyoos(params) + []).flatten
     end
     
     def parse_reyoos(params)
