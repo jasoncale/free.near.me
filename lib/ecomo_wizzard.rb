@@ -56,6 +56,7 @@ class EcomoWizzard < Sinatra::Application
   
   get '/search/list.json' do
     login_required
+    update_user_location
     content_type "text/json"
     
     {
@@ -65,6 +66,7 @@ class EcomoWizzard < Sinatra::Application
   
   post '/search.json' do
     login_required
+    update_user_location
     content_type "text/json"
     
     search = current_user.searches.new(
@@ -86,12 +88,18 @@ class EcomoWizzard < Sinatra::Application
     redirect '/dashboard'
   end
   
+  private
+  
   def destroy_search(id)
     if search = current_user.searches.get(id)
       search.destroy
     else
       false
     end
+  end
+  
+  def update_user_location
+    current_user.update_location(params[:lat], params[:lon])
   end
   
 end

@@ -22,16 +22,14 @@ class Item
   
   def to_json(*a)
     {
-      'item' => {
-        'id' => id,
-        'title' => title,
-        'description' => description,
-        'created' => created,
-        'lat' => lat,
-        'lon' => long,
-        'source' => source.ident,
-        'url' => url
-      }
+      'id' => id,
+      'title' => title,
+      'description' => description,
+      'created' => created,
+      'lat' => lat,
+      'lon' => long,
+      'source' => source.ident,
+      'url' => url
     }.to_json(*a)
   end
   
@@ -46,12 +44,12 @@ class Item
     def parse_reyoos(params)
       RemoteListings::Reyooz.lookup(params.delete(:q), params).map do |item|
         Item.new(
-          item["item"]["id"],
-          item["item"]["title"],
-          item["item"]["description"],
-          item["item"]["created_at"],
-          item["item"]["lat"],
-          item["item"]["lng"],
+          item["id"],
+          item["title"],
+          item["description"],
+          item["created_at"],
+          item["lat"],
+          item["lng"],
           RemoteListings::Reyooz
         )
       end.sort {|a,b| a.created <=> b.created }.reverse

@@ -35,6 +35,10 @@ class User
     self.salt = (1..12).map{(rand(26)+65).chr}.join if !self.salt
     self.hashed_password = User.encrypt(@password, self.salt)
   end
+  
+  def update_location(_lat, _lon)
+    update_attributes(:lat => lat, :lon => _lon)
+  end
  
   protected
   def self.encrypt(pass, salt)
