@@ -38,7 +38,7 @@ require 'haml'
   end
   
   configure :production do
-    DataMapper.setup(:default, "sqlite3://" + File.join(DATABASE_DIR, "production.db"))
+    DataMapper.setup(:default, ENV['DATABASE_URL'] || ("sqlite3://" + File.join(DATABASE_DIR, "production.db")))
   end
   
   configure :test do
