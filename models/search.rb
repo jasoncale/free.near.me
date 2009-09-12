@@ -75,7 +75,7 @@ class Search
       self.all.each do |search|
         items = search.items
         unless items.empty?
-          items.select {|item| item.created >= search.updated_at }.each do |new_item|
+          items.select {|item| Date.parse(item.created) >= search.updated_at }.each do |new_item|
             search.notify_user_of(new_item)
           end
         end
