@@ -1,4 +1,4 @@
-require 'GeoKit'
+require 'geokit'
 
 class Search
   include DataMapper::Resource

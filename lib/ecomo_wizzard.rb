@@ -4,8 +4,6 @@ require 'rubygems'
 $:.unshift File.join(APP_ROOT, 'vendor', 'sinatra', 'lib')
 require 'sinatra'
 require 'json'
-require 'GeoKit'
-
 require 'lib/initializer'
 require 'lib/authinabox'
 require 'lib/remote_listings/init'
