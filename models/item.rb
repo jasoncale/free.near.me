@@ -44,9 +44,7 @@ class Item
   class << self
   
     def search(params)
-      {
-        :items => parse_reyoos(params)
-      }
+      parse_reyoos(params)
     end
     
     def parse_reyoos(params)
@@ -60,7 +58,7 @@ class Item
           item["item"]["lng"],
           RemoteListings::Reyooz
         )
-      end
+      end.sort {|a,b| a.created <=> b.created }.reverse
     end
   
   end

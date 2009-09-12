@@ -11,6 +11,12 @@ class User
   property :created_at, DateTime
   property :account_type, String, :nullable => false, :default => 'standard', :writer => :protected
   property :active, Boolean, :default => true, :writer => :protected
+  property :lat, String
+  property :long, String
+  property :twitter, String
+  property :mobile, String
+  
+  has n, :searches
   
   validates_present :password_confirmation
   validates_is_confirmed :password

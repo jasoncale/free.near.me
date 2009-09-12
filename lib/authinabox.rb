@@ -54,13 +54,16 @@ module Sinatra
         if Plugins::AuthInABox::OPTIONS[:template_language] == :haml          
           haml clean(<<-EOS)
                         %form{ :method => "post" }
-                          %label{ :for => "user_username" }
-                            username or e-mail:
-                          %input{ :id => "user_username", :name => "username", :size => 30, :type => "text" }
-                          %label{ :for => "user_password" }
-                            password:
-                          %input{ :id => "user_password", :name => "password", :size => 30, :type => "password" }
-                          %input{ :type => "submit", :value => "login" }
+                          %p
+                            %label{ :for => "user_username" }
+                              username or e-mail:
+                            %input{ :id => "user_username", :name => "username", :size => 30, :type => "text" }
+                          %p
+                            %label{ :for => "user_password" }
+                              password:
+                            %input{ :id => "user_password", :name => "password", :size => 30, :type => "password" }
+                          %p
+                            %input{ :type => "submit", :value => "login" }
                         EOS
         else
           erb clean(<<-EOS)
@@ -100,19 +103,32 @@ module Sinatra
         if Plugins::AuthInABox::OPTIONS[:template_language] == :haml
           haml clean(<<-EOS)
                         %form{ :action => "#{Plugins::AuthInABox::OPTIONS[:signup_url]}", :method => "post" }
-                          %label
-                            username:
-                          %input{ :id => "user_username", :name => "username", :size => 30, :type => "text" }
-                          %label
-                            email:
-                          %input{ :id => "user_email", :name => "email", :size => 30, :type => "text" }
-                          %label
-                            password:
-                          %input{ :id => "user_password", :name => "password", :size => 30, :type => "password" }
-                          %label
-                            confirm:
-                          %input{ :id => "user_password_confirmation", :name => "password_confirmation", :size => 30, :type => "password" }
-                          %input{ :type => "submit", :value => "sign up" }
+                          %p
+                            %label
+                              username:
+                            %input{ :id => "user_username", :name => "username", :size => 30, :type => "text" }
+                          %p
+                            %label
+                              email:
+                            %input{ :id => "user_email", :name => "email", :size => 30, :type => "text" }
+                          %p
+                            %label
+                              password:
+                            %input{ :id => "user_password", :name => "password", :size => 30, :type => "password" }
+                          %p
+                            %label
+                              confirm:
+                            %input{ :id => "user_password_confirmation", :name => "password_confirmation", :size => 30, :type => "password" }                            
+                          %p
+                            %label
+                              mobile:
+                              %input{ :id => "user_mobile", :name => "mobile", :size => 30, :type => "text" }
+                          %p
+                            %label
+                              twitter username:
+                              %input{ :id => "user_twitter", :name => "twitter", :size => 30, :type => "text" }
+                          %p
+                            %input{ :type => "submit", :value => "sign up" }
                         EOS
         else
           erb clean(<<-EOS)
@@ -126,7 +142,6 @@ module Sinatra
               </label>
               <input id='user_email' name='email' size='30' type='text' />
               <label>
-            
                 password:
               </label>
               <input id='user_password' name='password' size='30' type='password' />
