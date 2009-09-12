@@ -74,7 +74,7 @@ class Search
     def poll
       self.all.each do |search|
         items = search.items
-        if items.present?
+        unless items.empty?
           items.select {|item| item.created >= search.updated_at }.each do |new_item|
             search.notify_user_of(new_item)
           end
