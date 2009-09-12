@@ -44,12 +44,12 @@ class Item
     def parse_reyoos(params)
       RemoteListings::Reyooz.lookup(params.delete(:q), params).map do |item|
         Item.new(
-          item["id"],
-          item["title"],
-          item["description"],
-          item["created_at"],
-          item["lat"],
-          item["lng"],
+          item["item"]["id"],
+          item["item"]["title"],
+          item["item"]["description"],
+          item["item"]["created_at"],
+          item["item"]["lat"],
+          item["item"]["lng"],
           RemoteListings::Reyooz
         )
       end.sort {|a,b| a.created <=> b.created }.reverse
