@@ -18,7 +18,7 @@ class User
   
   has n, :searches
   
-  validates_present :password_confirmation
+  validates_present :password_confirmation, :if => Proc.new {|u| !u.password.blank? }
   validates_is_confirmed :password
  
   # Authenticate a user based upon a (username or e-mail) and password

@@ -23,6 +23,10 @@ module RemoteListings
         
       end
       
+      def permalink_for(item)
+        URI.join(base_uri, "/items/#{item.to_param}")
+      end
+      
       def ident
         'reyooz'
       end

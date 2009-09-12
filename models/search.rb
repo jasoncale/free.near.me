@@ -36,7 +36,7 @@ class Search
   end
   
   def notify_twitter(item)
-    Tweet.post("@#{search}")
+    Tweet.notify("@#{self.user.twitter} #{item.title} #{item.permalink}")
   end
   
   class << self
