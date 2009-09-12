@@ -20,7 +20,7 @@ class RemoteListings::ReyoozTest < Test::Unit::TestCase
         }
       ]
       
-      RemoteListings::Reyooz.expects(:lookup).at_least_once.with("sofa", {}).returns(@items)
+      #RemoteListings::Reyooz.expects(:lookup).at_least_once.with("sofa", {}).returns(@items)
       
       @latest = RemoteListings::Reyooz.lookup("sofa", {})
     end
@@ -42,8 +42,8 @@ class RemoteListings::ReyoozTest < Test::Unit::TestCase
         @search = Item.search(:q => "sofa")
       end
 
-      should "description" do
-        @search.include?(@latest.first)
+      should "contain reyooz results" do
+        assert_equal(@search.first.title, "1 double bed, 1 double mattress & 2 sofa's")
       end
     end
     

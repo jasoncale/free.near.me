@@ -22,6 +22,10 @@ module RemoteListings
         end
         
       end
+      
+      def ident
+        'reyooz'
+      end
     
     end
   end

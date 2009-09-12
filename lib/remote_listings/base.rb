@@ -5,13 +5,13 @@ module RemoteListings
   
   class Base
     include HTTParty
+          
+    class << self
     
+      def permalink_for(item)
+        URI.join(base_uri, item.to_param)
+      end
       
-    # def permalink_for(item)
-    #   URI.join(base_uri, item.to_param)
-    # end
-    
-    # class << self
     #   def recent(options = {})
     #     options = {:since => Time.now}.merge(options)
     # 
@@ -21,8 +21,9 @@ module RemoteListings
     #   def lookup(options = {})
     #     []
     #   end
-    # end
-    # 
+    
+    end
+     
   end
   
 end
