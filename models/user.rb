@@ -12,7 +12,7 @@ class User
   property :account_type, String, :nullable => false, :default => 'standard', :writer => :protected
   property :active, Boolean, :default => true, :writer => :protected
   property :lat, String
-  property :long, String
+  property :lon, String
   property :twitter, String
   property :mobile, String
   
@@ -37,7 +37,7 @@ class User
   end
   
   def update_location(_lat, _lon)
-    update_attributes(:lat => lat, :lon => _lon)
+    update_attributes(:lat => _lat, :lon => _lon)
   end
  
   protected

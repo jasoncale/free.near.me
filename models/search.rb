@@ -1,3 +1,5 @@
+require 'GeoKit'
+
 class Search
   include DataMapper::Resource
   
@@ -6,7 +8,7 @@ class Search
   property :updated_at, DateTime
   
   property :query, String, :nullable => false
-  property :distance, Integer, :default => 25
+  property :search_distance, Integer, :default => 25
   
   belongs_to :user
   
@@ -17,21 +19,44 @@ class Search
     {
       'id' => id,
       'query' => query,
-      'distance' => distance,
+      'distance' => search_distance,
       'created_at' => created_at,
       'updated_at' => updated_at,
       'lat' => user.lat,
-      'lon' => user.long,
+      'lon' => user.lon,
       'items' => items
     }.to_json(*a)
   end  
 
   def items
     Item.search(
-      :q => self.query,
-      :lat => user.lat,
-      :long => user.long
+      
+      {
+        :q => self.query,
+        :sw_lat => sw_lat,
+        :sw_lng => sw_lng,
+        :ne_lat => ne_lat,
+        :ne_lng => ne_lng
+      }.reject{|k,v| v.blank? }
+      
     )
+  end
+
+  attr_accessor :sw_lat, :sw_lng, :ne_lat, :ne_lng
+  
+  def distance=(value)
+    self.search_distance = value
+    
+    unless self.user.blank?
+      unless (self.user.lat.blank? || self.user.lon.blank?)
+        bounds = GeoKit::Bounds.from_point_and_radius([self.user.lat, self.user.lon], value.to_i)
+
+        self.sw_lat = bounds.sw.lat
+        self.sw_lng = bounds.sw.lng
+        self.ne_lat = bounds.ne.lat
+        self.ne_lng = bounds.ne.lng
+      end
+    end
   end
   
   def notify_user_of(item)

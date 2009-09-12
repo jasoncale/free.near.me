@@ -1,14 +1,14 @@
 class Item
   
-  attr_accessor :id, :title, :description, :created, :lat, :long, :source
+  attr_accessor :id, :title, :description, :created, :lat, :lon, :source
   
-  def initialize(id, title, description, created, lat, long, source)
+  def initialize(id, title, description, created, lat, lon, source)
     @id = id
     @title = title
     @description = description
     @created = created
     @lat = lat
-    @long = long    
+    @lon = lon    
     @source = source
   end
    
@@ -27,7 +27,7 @@ class Item
       'description' => description,
       'created' => created,
       'lat' => lat,
-      'lon' => long,
+      'lon' => lon,
       'source' => source.ident,
       'url' => url
     }.to_json(*a)
@@ -37,7 +37,7 @@ class Item
   
   class << self
   
-    def search(params)
+    def search(params = {})
       (parse_reyoos(params) + []).flatten
     end
     

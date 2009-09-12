@@ -97,7 +97,9 @@ class EcomoWizzard < Sinatra::Application
   end
   
   def update_user_location
-    #current_user.update_location(params[:lat], params[:lon])
+    if params[:lat] && params[:lon]
+      current_user.update_location(params[:lat], params[:lon])
+    end
   end
   
 end
