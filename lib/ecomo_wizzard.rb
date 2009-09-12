@@ -73,7 +73,7 @@ class EcomoWizzard < Sinatra::Application
     )
       
     if search.save
-      search.results.to_json
+      search.to_json
     else
       status 422
       '{name: "JSONRequestError", message: "bad data"}'
